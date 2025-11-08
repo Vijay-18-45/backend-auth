@@ -9,10 +9,19 @@ app.use(helmet())
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+
+
+ 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://autho-authen.vercel.app" 
+];
+
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: allowedOrigins, 
   credentials: true,
 }));
+
 
 
 mongoose.connect(process.env.MONGO_URL).then(()=>{
