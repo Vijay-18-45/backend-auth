@@ -12,13 +12,10 @@ app.use(express.urlencoded({extended:true}))
 
 
  
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://autho-authen.vercel.app" 
-];
+
 
 app.use(cors({
-  origin: allowedOrigins, 
+  origin: "http://localhost:3000", 
   credentials: true,
 }));
 
