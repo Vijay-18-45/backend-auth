@@ -13,19 +13,26 @@ app.use(express.urlencoded({extended:true}))
 
  
 
-
-
-
 const allowedOrigins = [
   "http://localhost:3000",
-  "http://127.0.0.1:3000"
-  
+  "http://127.0.0.1:3000",
+  "https://autho-authen.vercel.app"
 ];
 
 app.use(cors({
-  origin: allowedOrigins,
-  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
 }));
+
+
+
+
 
 
 

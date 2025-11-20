@@ -1,5 +1,5 @@
-const { signupSchema, signinSchema,acceptCodeSchema,changePasswordSchema ,acceptFPCodeSchema} = require('../middlewares/validator')
-const { doHash, doHashvalidation,hmacProcess} = require('../utils/hashing')
+const { signupSchema, signinSchema, acceptCodeSchema, changePasswordSchema, acceptFPCodeSchema } = require('../middlewares/validator')
+const { doHash, doHashvalidation, hmacProcess } = require('../utils/hashing')
 const User = require('../models/usersModel');
 const jwt = require('jsonwebtoken')
 const transport = require('../middlewares/sendmail')
@@ -82,12 +82,14 @@ exports.signin = async (req, res) => {
         );
 
 
-        res
-            .cookie('Authorization', 'Bearer ' + token, {
-                expires: new Date(Date.now() + 8 * 3600000),
-                httpOnly: process.env.NODE_ENV === 'production',
-                secure: process.env.NODE_ENV === 'production',
-            })
+        res.cookie("Authorization", "Bearer " + token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            path: "/",
+            expires: new Date(Date.now() + 8 * 3600000),
+        })
+
             .json({
                 success: true,
                 token,
@@ -103,11 +105,11 @@ exports.signin = async (req, res) => {
 }
 
 
-exports.signout = async (req,res) =>{
-  
-    res.clearCookie('Authorization').status(200).json({sucess:true,message:'logged out sucessfully'})
+exports.signout = async (req, res) => {
 
-  
+    res.clearCookie('Authorization').status(200).json({ sucess: true, message: 'logged out sucessfully' })
+
+
 
 }
 
